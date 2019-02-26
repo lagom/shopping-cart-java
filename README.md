@@ -68,3 +68,4 @@ The inventory service offers two REST endpoints:
     ```
 
 The inventory service consumes the `shopping-cart` topic from Kafka, and decrements the inventory according to the events.
+
