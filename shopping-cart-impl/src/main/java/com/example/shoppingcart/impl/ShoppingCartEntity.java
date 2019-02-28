@@ -40,10 +40,9 @@ public class ShoppingCartEntity extends PersistentEntity<ShoppingCartCommand, Sh
     @Override
     public Behavior initialBehavior(Optional<ShoppingCartState> snapshotState) {
 
-        ShoppingCartState state = snapshotState.orElse(ShoppingCartState.EMPTY);
-        BehaviorBuilder b = newBehaviorBuilder(state);
+        BehaviorBuilder b = newBehaviorBuilder(snapshotState.orElse(ShoppingCartState.EMPTY));
 
-        if (state.isCheckedOut()) {
+        if (b.getState().isCheckedOut()) {
             return checkedOut(b);
         } else {
             return openShoppingCart(b);
