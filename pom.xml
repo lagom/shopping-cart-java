@@ -4,16 +4,16 @@
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.example</groupId>
-    <artifactId>shopping-cart</artifactId>
+    <artifactId>shopping-cart-example</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
     <modules>
         <module>shopping-cart-api</module>
-        <module>shopping-cart-impl</module>
+        <module>shopping-cart</module>
         <module>inventory-api</module>
-        <module>inventory-impl</module>
+        <module>inventory</module>
     </modules>
 
     <build>
@@ -80,8 +80,8 @@
                             <build>
                                 <from>adoptopenjdk/openjdk8</from>
                                 <tags>
+                                    <tag>${version.number}</tag>
                                     <tag>latest</tag>
-                                    <tag>${project.version}</tag>
                                 </tags>
                                 <assembly>
                                     <descriptorRef>artifact-with-dependencies</descriptorRef>
@@ -89,6 +89,24 @@
                             </build>
                         </image>
                     </images>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>2.2.6</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <dateFormat>yyyyMMdd-HHmmss</dateFormat>
+                    <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+                    <generateGitPropertiesFile>false</generateGitPropertiesFile>
                 </configuration>
             </plugin>
         </plugins>
@@ -173,5 +191,6 @@
         <scala.binary.version>2.12</scala.binary.version>
         <akka.management.version>1.0.0-RC2</akka.management.version>
         <akka.http.version>10.1.7</akka.http.version>
+        <version.number>${git.commit.time}.${git.commit.id.abbrev}</version.number>
     </properties>
 </project>
